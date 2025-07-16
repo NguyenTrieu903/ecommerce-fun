@@ -44,12 +44,8 @@ This project uses GitHub Actions for continuous integration and deployment. The 
 4. Runs all tests with coverage reporting
 5. Builds the production application (ignoring linting warnings)
 
-See `.github/workflows/ci-cd.yml` for the complete workflow configuration.
 
-### Build Scripts
-
-- `npm run build` - Standard build for local development
-- `npm run build:ci` - Build for CI environment (ignores ESLint warnings)
+### Features
 
 - **Shopping Cart:** Add and remove items from your cart, update quantities, and proceed to checkout.
 - **Order Management:** View and manage your order history.
