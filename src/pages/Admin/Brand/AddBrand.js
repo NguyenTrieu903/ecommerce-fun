@@ -28,7 +28,6 @@ export const AddBrand = () => {
       return navigate("/admin/all-brands");
     }
     if (resError?.error) {
-      console.log(resError.error);
       setError(resError.error);
     }
     if (resError?.status === 500) {

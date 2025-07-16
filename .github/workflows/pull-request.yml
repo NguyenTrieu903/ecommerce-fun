@@ -78,7 +78,7 @@ jobs:
         run: npm i
 
       - name: Build project
-        run: npm run build
+        run: npm run build:ci
 
       - name: Analyze bundle size
         uses: actions/upload-artifact@v3

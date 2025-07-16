@@ -44,10 +44,15 @@ This project uses GitHub Actions for continuous integration and deployment. The 
 2. Tests the application with Node.js 16.x and 18.x
 3. Lints the code
 4. Runs all tests with coverage reporting
-5. Builds the production application
+5. Builds the production application (ignoring linting warnings)
 6. Deploys to production (when merged to main/master)
 
 See `.github/workflows/ci-cd.yml` for the complete workflow configuration.
+
+### Build Scripts
+
+- `npm run build` - Standard build for local development
+- `npm run build:ci` - Build for CI environment (ignores ESLint warnings)
 
 - **Shopping Cart:** Add and remove items from your cart, update quantities, and proceed to checkout.
 - **Order Management:** View and manage your order history.
