@@ -12,8 +12,6 @@ This project is a full-stack e-commerce solution built with React, Redux, Redux-
 - [Usage](#usage)
 - [Testing](#testing)
 - [CI/CD Pipeline](#cicd-pipeline)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -40,12 +38,11 @@ npm run test:ci
 
 This project uses GitHub Actions for continuous integration and deployment. The pipeline:
 
-1. Runs on push to main/master/develop branches and on pull requests
-2. Tests the application with Node.js 16.x and 18.x
+1. Runs on pull requests and merge to master
+2. Tests the application with Node.js 18.x
 3. Lints the code
 4. Runs all tests with coverage reporting
 5. Builds the production application (ignoring linting warnings)
-6. Deploys to production (when merged to main/master)
 
 See `.github/workflows/ci-cd.yml` for the complete workflow configuration.
 
