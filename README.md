@@ -1,6 +1,6 @@
-# Megamart E-commerce Website
+# E-commerce Website
 
-Welcome to my React Redux eCommerce website! This project is a full-stack e-commerce solution built with React, Redux, Redux-toolkit and various other technologies. Whether you're a developer looking to contribute, a business owner interested in my platform, or just a curious user, this README will guide you through the essential details of my project.
+This project is a full-stack e-commerce solution built with React, Redux, Redux-toolkit and various other technologies. Whether you're a developer looking to contribute, a business owner interested in my platform, or just a curious user, this README will guide you through the essential details of my project.
 
 ![Alt text](./public/website-screenshot.png)
 
@@ -100,19 +100,3 @@ If you are an admin, access the admin panel to manage products, categories, and 
     ```
 
 If your are successfully login as a admin then you can manage everything.
-
-## Contributing
-
-If you have any suggestions on what to improve this website, please make a issue share your ideas and create your pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE.md). Feel free to use, modify, and distribute it as per the terms of the license.
-
-Enjoy your shopping experience with my MegaMart E-commerce website! If you have any questions or encounter any issues, please create a issue or [contact me](https://www.linkedin.com/in/sk-sabbir-hossain/).
-
-## server side code is here.
-
-```bash
-    https://github.com/sksabbirhossain/megamart-ecommerce-server.git
-```
