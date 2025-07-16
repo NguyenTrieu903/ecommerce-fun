@@ -10,6 +10,8 @@ This project is a full-stack e-commerce solution built with React, Redux, Redux-
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing](#testing)
+- [CI/CD Pipeline](#cicd-pipeline)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -19,6 +21,34 @@ My React Redux megamart eCommerce website features:
 
 - **Product Catalog:** Browse and search for products across various categories.
 - **User Authentication:** Register, login, and manage your user profile.
+
+## Testing
+
+This project uses Jest and React Testing Library for unit testing. Tests are located in the `src/tests` directory and organized by component, feature, and utility functions.
+
+To run tests:
+
+```bash
+# Run tests in watch mode (development)
+npm test
+
+# Run tests with coverage report
+npm run test:ci
+```
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment. The pipeline:
+
+1. Runs on push to main/master/develop branches and on pull requests
+2. Tests the application with Node.js 16.x and 18.x
+3. Lints the code
+4. Runs all tests with coverage reporting
+5. Builds the production application
+6. Deploys to production (when merged to main/master)
+
+See `.github/workflows/ci-cd.yml` for the complete workflow configuration.
+
 - **Shopping Cart:** Add and remove items from your cart, update quantities, and proceed to checkout.
 - **Order Management:** View and manage your order history.
 - **Admin Panel:** An admin interface for managing products, categories, and orders.
@@ -55,24 +85,12 @@ To get started with my React Redux eCommerce website, follow these steps:
 3. Install server dependencies. (recommended use yarn)
 
    ```bash
-   yarn install
-   ```
-
-   Or,
-
-   ```bash
    npm install
    ```
 
 4. Create a `.env` file or rename `.env.dev` to `.env` and add your own configuration based on the provided `.env.dev` file.
 
 5. Start the development server using this command.
-
-   ```bash
-   yarn start
-   ```
-
-   Or
 
    ```bash
    npm start

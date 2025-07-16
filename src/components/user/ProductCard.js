@@ -46,8 +46,8 @@ export const ProductCard = ({ product }) => {
         <p className="flex items-center text-orange-600">
           {Array(rating)
             .fill()
-            .map((i) => (
-              <FaStar />
+            .map((_, index) => (
+              <FaStar key={index} />
             ))}
 
           <span className="text-gray-500 text-sm font-thin ml-1">
