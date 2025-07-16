@@ -1,4 +1,4 @@
-name: MegaMart Pull Request Checks
+name: Ecommerce-fun Pull Request Checks
 
 on:
   pull_request:

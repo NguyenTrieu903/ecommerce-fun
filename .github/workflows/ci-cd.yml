@@ -1,14 +1,14 @@
-name: MegaMart CI/CD
+name: Ecommerce-fun CI/CD
 
 on:
-  push:
-    branches: [main, master, develop]
   pull_request:
-    branches: [main, master, develop]
+    types: [closed]
+    branches: [main, master]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
 
     strategy:
       matrix:
@@ -34,12 +34,3 @@ jobs:
 
       - name: Build project
         run: npm run build:ci
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage/
-          flags: unittests
-          fail_ci_if_error: true
-        if: ${{ github.event_name != 'pull_request' }}
