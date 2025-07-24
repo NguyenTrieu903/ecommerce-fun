@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import {
   FaCashRegister,
   FaChair,
-  FaRegHeart,
   FaSearchLocation,
   FaShareAlt,
   FaSlack,
@@ -12,6 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { ProductDetailsSkeleton } from "../../../components/ui/ProductDetailsSkeleton";
+import { WishlistButton } from "../../../components/user/WishlistButton/WishlistButton";
 import { addToCart } from "../../../features/cart/addToCartSlice";
 import { useGetProductQuery } from "../../../features/product/productApi";
 import { setTitle } from "../../../utils/setTitle";
@@ -106,9 +106,7 @@ export const ProductDetails = () => {
               <span className="cursor-pointer hover:text-orange-600 duration-200 ease-out">
                 <FaShareAlt />
               </span>
-              <span className="cursor-pointer hover:text-orange-600 duration-200 ease-out">
-                <FaRegHeart />
-              </span>
+              <WishlistButton product={product} size="md" />
             </div>
           </div>
 

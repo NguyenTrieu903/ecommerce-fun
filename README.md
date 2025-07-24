@@ -44,10 +44,14 @@ This project uses GitHub Actions for continuous integration and deployment. The 
 4. Runs all tests with coverage reporting
 5. Builds the production application (ignoring linting warnings)
 
-
 ### Features
 
 - **Shopping Cart:** Add and remove items from your cart, update quantities, and proceed to checkout.
+- **Wishlist/Favorites:** Save products to your wishlist for later purchase, with persistent storage across sessions.
+- **Order Management:** View and manage your order history.
+- **Admin Panel:** An admin interface for managing products, categories, and orders.
+- **Responsive Design:** A mobile-friendly user interface for a seamless shopping experience on all devices.
+- **Payment Integration:** Secure payment processing to complete orders.
 - **Order Management:** View and manage your order history.
 - **Admin Panel:** An admin interface for managing products, categories, and orders.
 - **Responsive Design:** A mobile-friendly user interface for a seamless shopping experience on all devices.
