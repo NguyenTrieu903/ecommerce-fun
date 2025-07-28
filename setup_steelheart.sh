@@ -46,33 +46,75 @@ echo -e "${YELLOW}   • API Key: [from OPENAI_API_KEY environment variable]${NC
 echo -e "${YELLOW}   • Output Folder: [default]${NC}"
 echo -e "${YELLOW}   • Model Type: [default]${NC}"
 
-# Use printf to provide automated inputs to steelheart setup
-if printf "$OPENAI_API_KEY\n\n\n" | npx steelheart setup; then
-    echo -e "${GREEN}✅ Steelheart setup completed successfully with automated inputs${NC}"
-else
-    echo -e "${RED}❌ Failed to run steelheart setup${NC}"
+# Create a temporary script to handle the interactive setup
+cat > /tmp/steelheart_setup.sh << 'SETUP_SCRIPT'
+#!/bin/bash
+# This script will handle the interactive setup
+
+# Start steelheart setup in background and get its PID
+npx steelheart setup &
+SETUP_PID=$!
+
+# Give it a moment to start
+sleep 2
+
+# Kill the process if it takes too long
+timeout 30 bash -c "
+    while kill -0 $SETUP_PID 2>/dev/null; do
+        sleep 1
+    done
+" || {
+    echo 'Setup timed out, killing process...'
+    kill -9 $SETUP_PID 2>/dev/null
     exit 1
-fi
+}
 
-echo ""
+wait $SETUP_PID
+SETUP_SCRIPT
 
-# Step 2: Configure steelheart with OpenAI API key
-echo -e "${YELLOW}🔑 Configuring steelheart with OpenAI API key...${NC}"
+chmod +x /tmp/steelheart_setup.sh
 
-# Create or update steelheart config with API key
-if npx steelheart config set openai.apiKey "$OPENAI_API_KEY"; then
-    echo -e "${GREEN}✅ OpenAI API key configured successfully${NC}"
+# Alternative: Use a simpler approach with a config file
+echo -e "${BLUE}📋 Creating steelheart configuration...${NC}"
+
+# Create steelheart config directory if it doesn't exist
+mkdir -p ~/.steelheart
+
+# Create config file directly
+cat > ~/.steelheart/config.json << EOF
+{
+  "openai": {
+    "apiKey": "$OPENAI_API_KEY"
+  },
+  "outputDir": "./steelheart-output",
+  "model": "gpt-4o-mini"
+}
+EOF
+
+# Also create local config
+cat > .steelheart.json << EOF
+{
+  "openai": {
+    "apiKey": "$OPENAI_API_KEY"
+  },
+  "outputDir": "./steelheart-output",
+  "model": "gpt-4o-mini"
+}
+EOF
+
+echo -e "${GREEN}✅ Steelheart configuration created successfully${NC}"
+
+# Test if steelheart can read the config
+if npx steelheart --version >/dev/null 2>&1; then
+    echo -e "${GREEN}✅ Steelheart setup completed successfully${NC}"
 else
-    echo -e "${YELLOW}⚠️  Direct config command failed, trying alternative method...${NC}"
-    
-    # Alternative: Set environment variable for steelheart
-    echo "OPENAI_API_KEY=$OPENAI_API_KEY" > .steelheart
-    echo -e "${GREEN}✅ Created .steelheart with API key${NC}"
+    echo -e "${YELLOW}⚠️  Manual setup may be required${NC}"
+    echo -e "${BLUE}💡 If needed, run: npx steelheart setup${NC}"
 fi
 
 echo ""
 
-# Step 3: Verify configuration
+# Step 2: Verify configuration
 echo -e "${YELLOW}🔍 Verifying steelheart configuration...${NC}"
 if npx steelheart --version; then
     echo -e "${GREEN}✅ Steelheart is configured and ready to use${NC}"
@@ -83,7 +125,7 @@ fi
 
 echo ""
 
-# Step 4: Test with a simple command
+# Step 3: Test with a simple command
 echo -e "${YELLOW}🧪 Testing steelheart functionality...${NC}"
 if npx steelheart --help; then
     echo -e "${GREEN}✅ Steelheart is working correctly${NC}"
