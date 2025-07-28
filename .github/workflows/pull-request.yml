@@ -22,7 +22,10 @@ jobs:
         run: npm i
 
       - name: get version of steelheart-ai
-        run: steelheart --version
+        run: npx steelheart --version
+
+      - name: Run auto-review with Steelheart
+        run: npx steelheart auto-review
 
       - name: Run linting
         run: npm run lint
