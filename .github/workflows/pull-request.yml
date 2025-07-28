@@ -67,7 +67,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "chore: add Steelheart AI analysis output [skip ci]"
-            git push origin HEAD
+            git push origin HEAD:${{ github.head_ref }}
           fi
 
       - name: Run linting
