@@ -149,7 +149,7 @@ fi
 # Run steelheart auto-review with appropriate options
 if [ -n "$BASE_BRANCH" ]; then
     echo -e "${BLUE}� Using base branch: $BASE_BRANCH${NC}"
-    if npx steelheart auto-review --base "$BASE_BRANCH" --auto-comment; then
+    if npx steelheart auto-review --base "$BASE_BRANCH"; then
         echo -e "${GREEN}✅ Auto-review completed successfully${NC}"
     else
         echo -e "${YELLOW}⚠️  Auto-review with base branch failed, trying with local files...${NC}"
@@ -157,15 +157,11 @@ if [ -n "$BASE_BRANCH" ]; then
     fi
 else
     echo -e "${BLUE}📋 No base branch found, analyzing all local files...${NC}"
-    if npx steelheart auto-review --include-local --auto-comment; then
+    if npx steelheart auto-review; then
         echo -e "${GREEN}✅ Auto-review completed successfully${NC}"
     else
         echo -e "${YELLOW}⚠️  Auto-review completed with warnings${NC}"
     fi
 fi
-
-echo ""
-echo -e "${BLUE}📝 Next steps:${NC}"
-echo -e "${YELLOW}   • Check the steelheart output in ./steelheart-output/${NC}"
-echo -e "${YELLOW}   • Run: npx steelheart auto-review --help for more options${NC}"
-echo -e "${YELLOW}   • View your .steelheart.json configuration${NC}"
+pwd
+ls -la
