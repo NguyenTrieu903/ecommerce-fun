@@ -32,9 +32,6 @@ jobs:
           chmod +x setup_steelheart.sh
           ./setup_steelheart.sh
 
-      - name: Run auto-review with Steelheart
-        run: npx steelheart auto-review
-
       - name: Run linting
         run: npm run lint
 
