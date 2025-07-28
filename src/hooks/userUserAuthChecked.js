@@ -16,5 +16,6 @@ export const useUserAuthChecked = () => {
 
     setUserAuth(true);
   }, [dispatch]);
+  console.log("useUserAuthChecked", userAuth);
   return userAuth;
 };
