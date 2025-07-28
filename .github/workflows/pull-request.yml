@@ -22,7 +22,7 @@ jobs:
         run: npm i
 
       - name: get version of steelheart-ai
-        run: echo "STEELHEART_AI_VERSION=$(npm show steelheart-ai version)" >> $GITHUB_ENV
+        run: steelheart --version
 
       - name: Run linting
         run: npm run lint
