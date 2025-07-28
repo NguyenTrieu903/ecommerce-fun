@@ -133,4 +133,4 @@ echo -e "${YELLOW}   • Run: npx steelheart auto-review${NC}"
 echo -e "${YELLOW}   • Run: npx steelheart --version${NC}"
 echo -e "${YELLOW}   • Check your .steelheart.json configuration${NC}"
 
-npx steelheart auto-review
+npx steelheart auto-review --base master
