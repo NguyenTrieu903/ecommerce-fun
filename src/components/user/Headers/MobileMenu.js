@@ -73,6 +73,15 @@ export const MobileMenu = ({ mobileMenu, setMobileMenu }) => {
 
               <p>
                 <Link
+                  to="/wishlist"
+                  className=" hover:bg-orange-700/50 p-2 rounded-md ease-out duration-100"
+                >
+                  <span className="text-base font-medium">My Wishlist</span>
+                </Link>
+              </p>
+
+              <p>
+                <Link
                   to="/my-order"
                   className=" hover:bg-orange-700/50 p-2 rounded-md ease-out duration-100"
                 >

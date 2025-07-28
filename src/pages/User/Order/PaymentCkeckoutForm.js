@@ -1,5 +1,4 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +33,6 @@ export const PaymentCkeckoutForm = ({ shippingInfo }) => {
     );
 
     if (error) {
-      console.error(error);
     } else {
       // Send the token to your server for payment processing and saving the shipping info
       const response = await fetch(

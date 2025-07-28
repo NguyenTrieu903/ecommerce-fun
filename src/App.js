@@ -24,6 +24,7 @@ import { MyOrder } from "./pages/User/Profile/MyOrder/MyOrder";
 import { Search } from "./pages/User/Search/Search";
 import { UserLogin } from "./pages/User/UserLogin";
 import { UserRegister } from "./pages/User/UserRegister";
+import { Wishlist } from "./pages/User/Wishlist/Wishlist";
 import { PrivateRoute } from "./routes/admin/PrivateRoute";
 import { PublicRoute } from "./routes/admin/PublicRoute";
 import { UserPrivateRoute } from "./routes/user/UserPrivateRoute";
@@ -83,6 +84,7 @@ function App() {
           element={<ProductByCategory />}
         />
         <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/search" element={<Search />} />
 
         {/* user private routes */}
