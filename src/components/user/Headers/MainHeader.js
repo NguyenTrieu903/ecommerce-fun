@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineShopping, AiOutlineUser } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
-import { FaAlignRight } from "react-icons/fa";
+import { FaAlignRight, FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,11 +10,13 @@ import {
 } from "../../../features/auth/userAuthSelectors";
 import { openCart } from "../../../features/cart/cartOpenSlice";
 import { selectCartItems } from "../../../features/cart/cartSelectors";
+import { selectWishlistCount } from "../../../features/wishlist/wishlistSelectors";
 import { Menu } from "./Menu";
 import { MobileMenu } from "./MobileMenu";
 
 export const MainHeader = () => {
   const cartItems = useSelector(selectCartItems);
+  const wishlistCount = useSelector(selectWishlistCount);
   const userAccessToken = useSelector(selectUserAccessToken);
   const userInfo = useSelector(selectUserInfo);
   const [searchValue, setSearchValue] = useState("");
@@ -145,6 +147,16 @@ export const MainHeader = () => {
           >
             <BsSearch />
           </button>
+
+          {/* wishlist */}
+          <Link to="/wishlist" className="flex items-center justify-center cursor-pointer relative">
+            <span className="text-3xl text-white">
+              <FaHeart />
+            </span>
+            <p className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs">
+              <span>{wishlistCount > 0 ? wishlistCount : "0"}</span>
+            </p>
+          </Link>
 
           {/* cart */}
           <div

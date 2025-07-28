@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineBug } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/common/Button/Button";
@@ -26,7 +26,6 @@ export const UserLogin = () => {
     }
     if (!isLoading && !isSuccess && resError) {
         setError(resError.data?.message);
-        console.log(resError)
     }
   }, [isLoading, isSuccess, navigate, resError]);
 

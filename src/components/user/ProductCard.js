@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../features/cart/addToCartSlice";
+import { WishlistButton } from "./WishlistButton/WishlistButton";
 import createSlug from "../../utils/createSlug";
 
 export const ProductCard = ({ product }) => {
@@ -23,7 +24,12 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="md:max-w-[250px] h-[325px] bg-white/80 border-gray-100 border rounded-md hover:shadow-lg duration-100 ease-linear">
+    <div className="md:max-w-[250px] h-[325px] bg-white/80 border-gray-100 border rounded-md hover:shadow-lg duration-100 ease-linear relative">
+      {/* Wishlist Button */}
+      <div className="absolute top-3 right-3 z-10">
+        <WishlistButton product={product} size="sm" />
+      </div>
+      
       <Link to={`/product-details/${productSlug}/${_id}`}>
         <div className="pt-2">
           <img

@@ -5,6 +5,7 @@ import addToCartSliceReducer from "../features/cart/addToCartSlice";
 import cartOpenSliceReducer from "../features/cart/cartOpenSlice";
 import sidebarSliceReducer from "../features/sidebar/sidebarSlice";
 import userAuthSliceReducer from "../features/auth/userAuthSlice";
+import wishlistSliceReducer from "../features/wishlist/wishlistSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     userAuth: userAuthSliceReducer,
     cartOpen: cartOpenSliceReducer,
     cartItems: addToCartSliceReducer,
+    wishlist: wishlistSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
