@@ -165,3 +165,5 @@ else
 fi
 pwd
 ls -la
+cd ./steelheart-output || { echo -e "${RED}❌ Failed to change directory to ./steelheart-output${NC}"; exit 1; }
+ls -la
