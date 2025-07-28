@@ -9,6 +9,9 @@ jobs:
   test-build:
     runs-on: ubuntu-latest
 
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
     steps:
       - uses: actions/checkout@v3
 
@@ -21,8 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: get version of steelheart-ai
-        run: npx steelheart --version
+      - name: Setup Steelheart AI
+        run: |
+          chmod +x setup_steelheart.sh
+          ./setup_steelheart.sh
 
       - name: Run auto-review with Steelheart
         run: npx steelheart auto-review
