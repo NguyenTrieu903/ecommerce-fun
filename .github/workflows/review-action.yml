@@ -1,0 +1,106 @@
+name: Steelheart AI Review Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to analyze (leave empty for current branch)'
+        required: false
+        type: string
+      commit_results:
+        description: 'Commit the analysis results'
+        required: false
+        default: true
+        type: boolean
+  workflow_call:
+    inputs:
+      branch:
+        description: 'Branch to analyze'
+        required: false
+        type: string
+        default: ''
+      commit_results:
+        description: 'Commit the analysis results'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  steelheart-review:
+    runs-on: ubuntu-latest
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - name: Checkout with branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: ${{ inputs.branch || github.ref }}
+
+      - name: Setup Git user configuration
+        run: |
+          # Check if git-config.env file exists and source it
+          if [ -f "git-config.env" ]; then
+            echo "Loading Git configuration from git-config.env"
+            source git-config.env
+          else
+            echo "git-config.env not found, using defaults"
+            export GIT_USER_EMAIL="${{ github.actor }}@users.noreply.github.com"
+            export GIT_USER_NAME="${{ github.actor }}"
+          fi
+
+          # Set environment variables for subsequent steps
+          echo "GIT_USER_EMAIL=$GIT_USER_EMAIL" >> $GITHUB_ENV
+          echo "GIT_USER_NAME=$GIT_USER_NAME" >> $GITHUB_ENV
+
+          echo "Git user configured as: $GIT_USER_NAME <$GIT_USER_EMAIL>"
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Setup Steelheart AI
+        run: |
+          chmod +x setup_steelheart.sh
+          ./setup_steelheart.sh
+
+      - name: Commit Steelheart AI output
+        if: ${{ inputs.commit_results }}
+        run: |
+          git config --local user.email "$GIT_USER_EMAIL"
+          git config --local user.name "$GIT_USER_NAME"
+          git add steelheart-output/
+          git add .
+          # Exclude .steelheart.json from commit
+          git reset HEAD .steelheart.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: add Steelheart AI analysis output [skip ci]"
+            # Determine the correct branch to push to
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              BRANCH_TO_PUSH="${{ inputs.branch || github.ref_name }}"
+            else
+              BRANCH_TO_PUSH="${{ github.head_ref || github.ref_name }}"
+            fi
+            git push origin HEAD:$BRANCH_TO_PUSH
+          fi
+
+      - name: Upload Steelheart Analysis Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: steelheart-analysis-${{ github.run_number }}
+          path: steelheart-output/
+          retention-days: 30

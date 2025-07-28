@@ -13,33 +13,11 @@ jobs:
   test-build:
     runs-on: ubuntu-latest
 
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
     steps:
       - name: Checkout with branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
-
-      - name: Setup Git user configuration
-        run: |
-          # Check if git-config.env file exists and source it
-          if [ -f "git-config.env" ]; then
-            echo "Loading Git configuration from git-config.env"
-            source git-config.env
-          else
-            echo "git-config.env not found, using defaults"
-            export GIT_USER_EMAIL="${{ github.actor }}@users.noreply.github.com"
-            export GIT_USER_NAME="${{ github.actor }}"
-          fi
-
-          # Set environment variables for subsequent steps
-          echo "GIT_USER_EMAIL=$GIT_USER_EMAIL" >> $GITHUB_ENV
-          echo "GIT_USER_NAME=$GIT_USER_NAME" >> $GITHUB_ENV
-
-          echo "Git user configured as: $GIT_USER_NAME <$GIT_USER_EMAIL>"
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
@@ -49,26 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: npm i
-
-      - name: Setup Steelheart AI
-        run: |
-          chmod +x setup_steelheart.sh
-          ./setup_steelheart.sh
-
-      - name: Commit Steelheart AI output
-        run: |
-          git config --local user.email "$GIT_USER_EMAIL"
-          git config --local user.name "$GIT_USER_NAME"
-          git add steelheart-output/
-          git add .
-          # Exclude .steelheart.json from commit
-          git reset HEAD .steelheart.json 2>/dev/null || true
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: add Steelheart AI analysis output [skip ci]"
-            git push origin HEAD:${{ github.head_ref }}
-          fi
 
       - name: Run linting
         run: npm run lint
