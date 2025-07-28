@@ -1,13 +1,4 @@
 #!/bin/bash
-
-# =============================================================================
-# Steelheart AI Setup Script
-# =============================================================================
-# This script configures steelheart-ai with OpenAI API key from environment
-# 1. Runs steelheart setup
-# 2. Configures with OPENAI_API_KEY from environment
-# =============================================================================
-
 set -e  # Exit on any error
 
 # Colors for output
@@ -141,3 +132,5 @@ echo -e "${BLUE}📝 Next steps:${NC}"
 echo -e "${YELLOW}   • Run: npx steelheart auto-review${NC}"
 echo -e "${YELLOW}   • Run: npx steelheart --version${NC}"
 echo -e "${YELLOW}   • Check your .steelheart.json configuration${NC}"
+
+npx steelheart auto-review
