@@ -128,9 +128,44 @@ fi
 echo ""
 echo -e "${GREEN}🎉 Steelheart AI setup and configuration completed successfully!${NC}"
 echo "=============================================="
-echo -e "${BLUE}📝 Next steps:${NC}"
-echo -e "${YELLOW}   • Run: npx steelheart auto-review${NC}"
-echo -e "${YELLOW}   • Run: npx steelheart --version${NC}"
-echo -e "${YELLOW}   • Check your .steelheart.json configuration${NC}"
 
-npx steelheart auto-review --base master
+# Step 4: Run auto-review with smart branch detection
+echo -e "${YELLOW}🤖 Running steelheart auto-review...${NC}"
+
+# Check available branches and choose the best base
+if git rev-parse --verify master >/dev/null 2>&1; then
+    BASE_BRANCH="master"
+elif git rev-parse --verify main >/dev/null 2>&1; then
+    BASE_BRANCH="main"
+elif git rev-parse --verify origin/master >/dev/null 2>&1; then
+    BASE_BRANCH="origin/master"
+elif git rev-parse --verify origin/main >/dev/null 2>&1; then
+    BASE_BRANCH="origin/main"
+else
+    # If no base branch found, use include-local flag
+    BASE_BRANCH=""
+fi
+
+# Run steelheart auto-review with appropriate options
+if [ -n "$BASE_BRANCH" ]; then
+    echo -e "${BLUE}� Using base branch: $BASE_BRANCH${NC}"
+    if npx steelheart auto-review --base "$BASE_BRANCH" --auto-comment; then
+        echo -e "${GREEN}✅ Auto-review completed successfully${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Auto-review with base branch failed, trying with local files...${NC}"
+        npx steelheart auto-review || echo -e "${YELLOW}⚠️  Auto-review completed with warnings${NC}"
+    fi
+else
+    echo -e "${BLUE}📋 No base branch found, analyzing all local files...${NC}"
+    if npx steelheart auto-review --include-local --auto-comment; then
+        echo -e "${GREEN}✅ Auto-review completed successfully${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Auto-review completed with warnings${NC}"
+    fi
+fi
+
+echo ""
+echo -e "${BLUE}📝 Next steps:${NC}"
+echo -e "${YELLOW}   • Check the steelheart output in ./steelheart-output/${NC}"
+echo -e "${YELLOW}   • Run: npx steelheart auto-review --help for more options${NC}"
+echo -e "${YELLOW}   • View your .steelheart.json configuration${NC}"
