@@ -16,6 +16,5 @@ export const useUserAuthChecked = () => {
 
     setUserAuth(true);
   }, [dispatch]);
-
   return userAuth;
 };
