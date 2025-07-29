@@ -69,8 +69,13 @@ jobs:
 
       - name: Setup Steelheart AI
         run: |
-          chmod +x setup_steelheart.sh
-          ./setup_steelheart.sh
+          chmod +x ./scripts/setup_steelheart.sh
+          ./scripts/setup_steelheart.sh
+
+      - name: Run Steelheart AI Review
+        run: |
+          chmod +x ./scripts/run_steelheart_review.sh
+          ./scripts/run_steelheart_review.sh
 
       - name: Commit Steelheart AI output
         if: ${{ inputs.commit_results }}
