@@ -72,6 +72,16 @@ jobs:
           chmod +x ./scripts/setup_steelheart.sh
           ./scripts/setup_steelheart.sh
 
+      - name: Run Steelheart AI Gen Tests
+        run: |
+          chmod +x ./scripts/run_steelheart_gen_tests.sh
+          ./scripts/run_steelheart_gen_tests.sh
+
+      - name: Run Steelheart AI Branch Docs
+        run: |
+          chmod +x ./scripts/run_steelheart_branch_docs.sh
+          ./scripts/run_steelheart_branch_docs.sh
+
       - name: Run Steelheart AI Review
         run: |
           chmod +x ./scripts/run_steelheart_review.sh
