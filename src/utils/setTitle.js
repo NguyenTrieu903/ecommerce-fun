@@ -1,3 +1,7 @@
 export const setTitle = (title) => {
-  document.title = `${title} - MegaMart`;
+  if (typeof title === 'string' && title.trim()) {
+    document.title = `${title.trim()} - MegaMart`;
+  } else {
+    document.title = 'MegaMart - Your One-Stop Shop';
+  }
 };
