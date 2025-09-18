@@ -1,4 +1,4 @@
-name: Steelheart AI Review Action
+name: Steelheart AI Action
 
 on:
   workflow_dispatch:
